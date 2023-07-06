@@ -29,15 +29,16 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);
 
 // provider(s), we can have multiple providers doing multiple things for the website
-const provider = new GoogleAuthProvider();
+const googleProvider = new GoogleAuthProvider();
 
-provider.setCustomParameters({
+googleProvider.setCustomParameters({
     prompt:"select_account"
 });
 
 //authentication is a singleton object that will last for the entire life cycle of the website usage
 export const auth = getAuth();
-export const signInWithGooglePopup = () => signInWithPopup(auth, provider);
+export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider);
+export const signInWithGoogleRedirect = () => signInWithRedirect(auth, googleProvider);
 
 //setting up database
 export const db = getFirestore();
@@ -45,11 +46,7 @@ export const db = getFirestore();
 
 export const createUserDocFromAuth = async (userAuth) =>{
     const userDocRef = doc(db, 'users', userAuth.uid);
-    console.log(userDocRef);
-
     const userSnapshot = await getDoc(userDocRef);
-    console.log(userSnapshot);
-    console.log(userSnapshot.exists());
 
     //if usersnapshot not exist ==> create and then set the document with the data from the use auth
     if(!userSnapshot.exists()){
