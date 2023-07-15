@@ -2,7 +2,7 @@ import { useState } from "react";
 import { 
     createAuthUserWithEmailAndPassword, 
     createUserDocFromAuth } 
-    from "../../utils/firebase/firebase.utils";
+    from "../../utils/firebase/firebase.utils.js";
 import FormInput from "../form-input/form-input.component";
 import './sign-up-form.style.scss'
 import Button from "../button/button.component";
@@ -34,7 +34,7 @@ const SignUpForm = () => {
 
         //confirm password matches
         if (password !== confirmPassword) {
-            alert("password does not match")
+            alert("password does not match");
             return;
         }
         //then see if user is authenticate with email and password

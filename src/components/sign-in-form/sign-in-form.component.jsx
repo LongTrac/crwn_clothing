@@ -5,7 +5,7 @@ import {
     createUserDocFromAuth,
     signInWithGooglePopup,
     signInAuthUserWithEmailAndPassword
-} from "../../utils/firebase/firebase.utils";
+} from "../../utils/firebase/firebase.utils.js";
 import './sign-in-form.style.scss'
 
 const defaultFormFields = {
