@@ -1,11 +1,14 @@
-import Button from "../button/button.component";
-import { useState } from "react";
-import FormInput from "../form-input/form-input.component";
+import { useState, useContext } from "react";
 import {
     createUserDocFromAuth,
     signInWithGooglePopup,
     signInAuthUserWithEmailAndPassword
 } from "../../utils/firebase/firebase.utils.js";
+
+import FormInput from "../form-input/form-input.component";
+import Button from "../button/button.component";
+
+import { UserContext } from "../../contexts/user.context.jsx";
 import './sign-in-form.style.scss'
 
 const defaultFormFields = {
@@ -16,6 +19,8 @@ const defaultFormFields = {
 const SignInForm = () => {
     const [formFields, setFormFields] = useState(defaultFormFields);
     const { email, password } = formFields;
+
+    const {setCurrentUser} = useContext(UserContext);     //userContext obj has 2 values: currentUser and setCurrentUser but in this case we only need 1
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -32,8 +37,10 @@ const SignInForm = () => {
 
         try {
 
-            const response = await signInAuthUserWithEmailAndPassword(email, password);
-            console.log(response);
+            const {user} = await signInAuthUserWithEmailAndPassword(email, password);
+
+            setCurrentUser(user);                       //store the user after sign in into the context
+            
             resetFormFields();
 
         } catch (error) {
