@@ -1,6 +1,5 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import {
-    createUserDocFromAuth,
     signInWithGooglePopup,
     signInAuthUserWithEmailAndPassword
 } from "../../utils/firebase/firebase.utils.js";
@@ -8,7 +7,6 @@ import {
 import FormInput from "../form-input/form-input.component";
 import Button from "../button/button.component";
 
-import { UserContext } from "../../contexts/user.context.jsx";
 import './sign-in-form.style.scss'
 
 const defaultFormFields = {
@@ -19,8 +17,6 @@ const defaultFormFields = {
 const SignInForm = () => {
     const [formFields, setFormFields] = useState(defaultFormFields);
     const { email, password } = formFields;
-
-    const {setCurrentUser} = useContext(UserContext);     //userContext obj has 2 values: currentUser and setCurrentUser but in this case we only need 1
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -37,10 +33,7 @@ const SignInForm = () => {
 
         try {
 
-            const {user} = await signInAuthUserWithEmailAndPassword(email, password);
-
-            setCurrentUser(user);                       //store the user after sign in into the context
-            
+            await signInAuthUserWithEmailAndPassword(email, password);
             resetFormFields();
 
         } catch (error) {
@@ -60,9 +53,12 @@ const SignInForm = () => {
 
     const signInWithGoogle = async () => {
         try {
-            const response = await signInWithGooglePopup();
-            const { user } = response;
-            await createUserDocFromAuth(user);
+            //this create user document from auth can be centralized within user context
+            // const response = await signInWithGooglePopup();
+            // const { user } = response;
+            // await createUserDocFromAuth(user);               ==> moved to user context
+
+            await signInWithGooglePopup();
         }catch (error){
             switch (error.code) {
                 case 'auth/popup-closed-by-user':
