@@ -8,12 +8,14 @@ import CartDropdown from "../../components/cart-dropdown/cart-dropdown.component
 import { signOutUser } from "../../utils/firebase/firebase.utils";
 
 import { UserContext } from "../../contexts/user.context";
+import { CartContext } from "../../contexts/cart.context";
 import './navigation.styles.scss'
 
 const Navigation = () => {
 
     const { currentUser } = useContext(UserContext);
 
+    const {isCartOpen} = useContext(CartContext);
 
     return (
         <Fragment>
@@ -41,9 +43,15 @@ const Navigation = () => {
                         </Link>
                     )}
 
-                    <CartIcon />
+                    <CartIcon/>
                 </div>
-                <CartDropdown />
+
+                {
+                    // equivalent with this statement: isCartOpen && <CartDropdown/>  
+                    //<==> this statement basically is a == statement but it will return the last thing if the condition turn true
+                    isCartOpen ? <CartDropdown /> :null
+
+                }        
 
             </div>
 
