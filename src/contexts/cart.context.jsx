@@ -57,16 +57,23 @@ export const CartContext = createContext({
     clearItemFromCart: () => { },
     cartCount: 0,
     setCartCount: () => { },
+    totalCartPrice: 0,
 });
 
 export const CartProvider = ({ children }) => {
     const [isCartOpen, setisCartOpen] = useState(false);
     const [cartItems, setCartItems] = useState([]);
     const [cartCount, setCartCount] = useState(0);
+    const [totalCartPrice, setTotalCartPrice] = useState(0);
+
 
     useEffect(() => {
         setCartCount(cartItems.reduce((accumulator, item) => accumulator + item.quantity, 0));
     }, [cartItems]);
+
+    useEffect(()=>{
+        setTotalCartPrice(cartItems.reduce((total, currentItem) => total + currentItem.quantity * currentItem.price , 0))
+    }, [cartItems])
     //logic for this function: this product to add, is it already exist within the cart or you need to add a new one
     const addItemToCart = (productToAdd) => {
         setCartItems(addCartItem(cartItems, productToAdd));
@@ -79,7 +86,7 @@ export const CartProvider = ({ children }) => {
     const clearItemFromCart = (productToClear) => {
         setCartItems(clearProduct(cartItems, productToClear));
     }
-    const value = { isCartOpen, setisCartOpen, addItemToCart, removeItemFromCart, cartItems, cartCount, clearItemFromCart };
+    const value = { isCartOpen, setisCartOpen, addItemToCart, removeItemFromCart, cartItems, cartCount, clearItemFromCart, totalCartPrice };
 
     return <CartContext.Provider value={value}>{children}</CartContext.Provider>
 

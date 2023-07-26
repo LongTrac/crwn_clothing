@@ -15,7 +15,11 @@ import {
     getFirestore,
     doc,        //getting the doc
     getDoc,     //getting doc data
-    setDoc
+    setDoc,
+    collection,
+    writeBatch,
+    query,
+    getDocs
 } from 'firebase/firestore'
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -99,4 +103,39 @@ export const onAuthStateChangedListener =  (callback) => {
     if(!callback) return;
 
     return onAuthStateChanged(auth, callback);
+}
+
+//collections portion for adding shop data into firestore db===========================================================================
+//we r using batch and it act like a transaction
+//  collectionkey   -   a string that signify what collection are we adding into our firestore db: in this case: 'categories'
+//  objToAdd        -   the shop data collection from shop_data.js that we use in productContext
+export const addCollectionAndDocuments = async (collectionKey, objectToAdd ) => {
+    const collectionRef = collection(db, collectionKey);
+    const batch = writeBatch(db);
+
+    objectToAdd.forEach(object => {
+        const docRef = doc(collectionRef, object.title.toLowerCase());
+        batch.set(docRef, object)
+    });
+
+    await batch.commit();
+    console.log('done')
+}
+
+//getting data from categories collection
+export const getCategoriesAndDocument = async () => {
+    const collectionRef = collection (db,'categories');  //same as the other method first line, must get that ref
+    const q =  query(collectionRef);
+    const querySnapshot = await getDocs(q);             //after this you can access the dat aby using querySnapshot.doc
+
+    // S1: step thru each obj return using reduce
+    // S2: destructuring the data into titles and items
+    // S3: set the accumulator array 
+    const categoryMap = querySnapshot.docs.reduce((accumulator, docSnapshot)=>{
+        const {title, items} = docSnapshot.data();
+        accumulator[title.toLowerCase()] = items;
+        return accumulator;
+    }, {})                       
+
+    return categoryMap;
 }
