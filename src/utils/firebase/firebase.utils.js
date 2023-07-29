@@ -109,11 +109,11 @@ export const onAuthStateChangedListener =  (callback) => {
 //we r using batch and it act like a transaction
 //  collectionkey   -   a string that signify what collection are we adding into our firestore db: in this case: 'categories'
 //  objToAdd        -   the shop data collection from shop_data.js that we use in productContext
-export const addCollectionAndDocuments = async (collectionKey, objectToAdd ) => {
+export const addCollectionAndDocuments = async (collectionKey, objectsToAdd ) => {
     const collectionRef = collection(db, collectionKey);
     const batch = writeBatch(db);
 
-    objectToAdd.forEach(object => {
+    objectsToAdd.forEach(object => {
         const docRef = doc(collectionRef, object.title.toLowerCase());
         batch.set(docRef, object)
     });

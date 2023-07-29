@@ -1,32 +1,17 @@
-import ProductCard from "../../components/product-card/product-card.component";
-import { CategoriesContext } from "../../contexts/categories.context";
-import { Fragment, useContext } from 'react';
-
-import './shop.style.scss'
+import { Route, Routes } from "react-router-dom";
+import CategoriesPreview from "../categories-preview/categories-preview.component";
+import Category from "../category/category.component";
 
 const Shop = () => {
-    const { categoriesMap } = useContext(CategoriesContext);
 
-    const titleArray = Object.keys(categoriesMap);
     return (
-        <Fragment>
-            {
-                titleArray.map(title =>
-                    <Fragment key={title}>
-                        <h2>{title}</h2>
-                        <div className="products-container">
-                            {categoriesMap[title].map((item) => {
-                                return (
-                                    <ProductCard key={item.id} product={item} />
-                                );
-                            })}
-                        </div>
-                    </Fragment>
-                )
-            }
+        <Routes>
+            <Route index element={<CategoriesPreview />} />
+            {/* path =":category"  ==> means that we can access the param 'category' inside of out Category component*/}
+            <Route path=":category" element={<Category/>} />
 
+        </Routes>
 
-        </Fragment>
     );
 }
 
