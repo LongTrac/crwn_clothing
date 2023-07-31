@@ -21,8 +21,6 @@ const CategoriesPreview = () => {
                 }
                 )
             }
-
-
         </div>
     );
 }

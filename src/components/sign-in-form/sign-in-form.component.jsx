@@ -7,7 +7,7 @@ import {
 import FormInput from "../form-input/form-input.component";
 import Button from "../button/button.component";
 
-import './sign-in-form.style.scss'
+import { SignInContainer, H2, ButtonsContainer } from './sign-in-form.style.jsx'
 
 const defaultFormFields = {
     email: '',
@@ -59,7 +59,7 @@ const SignInForm = () => {
             // await createUserDocFromAuth(user);               ==> moved to user context
 
             await signInWithGooglePopup();
-        }catch (error){
+        } catch (error) {
             switch (error.code) {
                 case 'auth/popup-closed-by-user':
                     alert("pop-up closed by user");
@@ -69,12 +69,12 @@ const SignInForm = () => {
                     console.log(error);
             }
         }
-        
+
     };
 
     return (
-        <div className="sign-in-container">
-            <h2>Already have an account</h2>
+        <SignInContainer>
+            <H2>Already have an account</H2>
             <span>Sign in with your email and password</span>
 
             <form onSubmit={handleSubmit}>
@@ -94,15 +94,12 @@ const SignInForm = () => {
                     name="password"
                     value={password} />
 
-                <div className="buttons-container">
+                <ButtonsContainer>
                     <Button type="Submit">SIGN IN</Button>
                     <Button type="button" buttonType={'google'} onClick={signInWithGoogle}>GOOGLE SIGN IN</Button>
-                </div>
+                </ButtonsContainer>
             </form>
-
-
-
-        </div>
+        </SignInContainer>
 
     );
 }
