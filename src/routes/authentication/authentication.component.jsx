@@ -9,7 +9,7 @@
 
 import SignUpForm from "../../components/sign-up-form/sign-up-form.component";
 import SignInForm from "../../components/sign-in-form/sign-in-form.component";
-import "./authentication.style.scss"
+import { AuthenticationContainer } from "./authentication.style.jsx"
 
 const Authentication = () => {
 
@@ -29,15 +29,15 @@ const Authentication = () => {
 
 
     return (
-        <div className="authentication-container">
+        <AuthenticationContainer>
             <SignInForm />
             {/* any code that happen aftrer the redirect will not happen since it is redirecting 
                 our entire page so the page got unmounted 
                 to be able to see result after redirect we must use UseEffect and getRedirectResult */}
             {/* <button onClick={signInWithGoogleRedirect}>Sign in with google redirect</button> */}
 
-            <SignUpForm/>
-        </div>
+            <SignUpForm />
+        </AuthenticationContainer>
     );
 }
 
