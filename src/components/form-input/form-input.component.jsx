@@ -1,20 +1,21 @@
-import './form-input.style.scss'
+import {FormInputLabel,Input,Group} from './form-input.style.jsx'
 
 const FormInput = ({ label, ...otherProps }) => {
     return (
-        <div className="group">
-            <input className="form-input"{...otherProps} />
+        <Group>
+            <Input{...otherProps} />
 
             {
                 //basically saying if no label was sent in here don;t render this label part 
                 label ? (
-                    <label className={`${otherProps.value.length > 0 ? 'shrink' : ''} form-input-label`}>
+                    // reason why passing the length: if length = 0 ==> false else true
+                    <FormInputLabel shrink={otherProps.value.length}> 
                         {label}
-                    </label>
+                    </FormInputLabel>
                 ) : null
             }
 
-        </div>
+        </Group>
 
     );
 
