@@ -17,6 +17,7 @@ const Navigation = () => {
 
     const { isCartOpen } = useContext(CartContext);
 
+    console.log(currentUser)
     return (
         <Fragment>
             <NavContainer>
@@ -34,9 +35,12 @@ const Navigation = () => {
                     </NavLink>
 
                     {currentUser ? (
-                        <NavLink as={'span'} onClick={signOutUser}>
-                            SIGN OUT
-                        </NavLink>
+                        <>
+                            {currentUser.displayName && <div> HELLO {currentUser.displayName.toUpperCase()} </div>}
+                            <NavLink as={'span'} onClick={signOutUser}>
+                                SIGN OUT
+                            </NavLink>
+                        </>
                     ) : (
                         <NavLink to='/auth'>
                             SIGN IN

@@ -8,7 +8,8 @@ import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     signOut,
-    onAuthStateChanged
+    onAuthStateChanged,
+    updateProfile
 } from 'firebase/auth'
 
 import {
@@ -80,11 +81,15 @@ export const createUserDocFromAuth = async (userAuth, additionalInfo = {}) => {
     return userDocRef;
 }
 
-export const createAuthUserWithEmailAndPassword = async (email, password) => {
+export const createAuthUserWithEmailAndPassword = async (email, password, displayName) => {
 
-    if (!email || !password) return;
+    if (!email || !password || !displayName) return;
 
-    return await createUserWithEmailAndPassword(auth, email, password);
+    const createdUserWithEmailPassword = await createUserWithEmailAndPassword(auth, email, password);
+    let {user} = createdUserWithEmailPassword;
+    await updateProfile(user,{displayName:displayName});
+
+    return createdUserWithEmailPassword;
 }
 
 export const signInAuthUserWithEmailAndPassword = async (email, password) => {

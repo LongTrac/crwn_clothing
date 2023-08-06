@@ -42,7 +42,7 @@ const SignUpForm = () => {
         }
         //then see if user is authenticate with email and password
         try {
-            const { user } = await createAuthUserWithEmailAndPassword(email, password); // this return a respond then deconstruct into user
+            const { user } = await createAuthUserWithEmailAndPassword(email, password, displayName); // this return a respond then deconstruct into user
 
             //create a user doc from what createAuthUserFromEmailAndPassword return
             await createUserDocFromAuth(user, { displayName });
