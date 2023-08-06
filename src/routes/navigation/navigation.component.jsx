@@ -34,6 +34,7 @@ const Navigation = () => {
                         SHOP
                     </NavLink>
 
+                    
                     {currentUser ? (
                         <>
                             {currentUser.displayName && <div> HELLO {currentUser.displayName.toUpperCase()} </div>}
