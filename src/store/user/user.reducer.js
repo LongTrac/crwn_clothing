@@ -4,7 +4,7 @@ const INITIAL_STATE = {
     currentUser: null,
 }
 
-export const userReducer = (state=INITIAL_STATE, action) => {
+export const userReducer = (state = INITIAL_STATE, action) => {
     const { type, payload } = action;         //meaning: based of this type I want to return/update this obj within payload
 
     switch (type) {
@@ -18,7 +18,7 @@ export const userReducer = (state=INITIAL_STATE, action) => {
             );
         default:
             //redux reducer will react to every action therefore, returning state that is exactly the same with the old state = no action needed for this reducer
-            return state
+            return state;
     }
 }
 
