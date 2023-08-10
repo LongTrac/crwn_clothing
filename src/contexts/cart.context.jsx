@@ -1,4 +1,5 @@
 import { createContext, useReducer } from "react";
+import { createAction } from "../utils/reducer/reducer.utils";
 
 //===================================================== HELPER METHODS ===========================================================================
 
@@ -126,15 +127,12 @@ export const CartProvider = ({ children }) => {
         const newCartCount = newCartItems.reduce((accumulator, item) => accumulator + item.quantity, 0);
         const newCartTotal = newCartItems.reduce((total, currentItem) => total + currentItem.quantity * currentItem.price, 0);
 
-        dispatch({
-            type: CART_REDUCER_ACTION_TYPE.SET_CART_ITEM,
-            payload:
+        dispatch(createAction(CART_REDUCER_ACTION_TYPE.SET_CART_ITEM,
             {
                 cartItems: newCartItems,
                 totalCartPrice: newCartTotal,
                 cartCount: newCartCount
-            }
-        })
+            }))
     }
 
     //===================================================== HELPER METHODS ===========================================================================
@@ -156,10 +154,7 @@ export const CartProvider = ({ children }) => {
     }
 
     const setisCartOpen = (isCartOpen) => {
-        dispatch({
-            type: CART_REDUCER_ACTION_TYPE.SET_IS_CART_OPEN,
-            payload: { isCartOpen: isCartOpen }
-        });
+        dispatch(createAction(CART_REDUCER_ACTION_TYPE.SET_IS_CART_OPEN,{ isCartOpen: isCartOpen }));
 
     }
 
