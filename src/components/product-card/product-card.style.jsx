@@ -24,6 +24,7 @@ export const ProductCardContainer = styled.div`
         position: absolute;
         top: 225px;
         display: none;
+        font-size: 0.8vw;
     }
     `
 
@@ -33,13 +34,13 @@ export const Img = styled.img`
     object-fit: cover;
     margin-bottom: 5px;
 `
-export const Button = styled.button`
-    width: 100%;
-    opacity: 0.7;
-    position: absolute;
-    top: 255px;
-    display: none;
-`
+// export const Button = styled.button`
+//     width: 100%;
+//     opacity: 0.7;
+//     position: absolute;
+//     top: 255px;
+//     display: none;
+// `
 export const Footer = styled.div`
     width: 85%;
     height: 5%;
