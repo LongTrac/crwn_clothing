@@ -4,7 +4,7 @@ const INITIAL_STATE = {
     currentUser: null,
 }
 
-export const userReducer = (state = INITIAL_STATE, action) => {
+export const userReducer = (state = INITIAL_STATE, action = {}) => {
     const { type, payload } = action;         //meaning: based of this type I want to return/update this obj within payload
 
     switch (type) {
